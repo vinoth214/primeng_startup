@@ -12,6 +12,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { HomeComponent } from './home/home.component';
 import {TableModule} from 'primeng/table';
 import { TableWidgetComponent } from './table-widget/table-widget.component';
+import { CustomersModule } from './customers/customers.module'
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { TableWidgetComponent } from './table-widget/table-widget.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     TableModule,DropdownModule,CalendarModule,
-    FormsModule
+    FormsModule,CustomersModule
   ],
   providers: [],
   bootstrap: [AppComponent]
