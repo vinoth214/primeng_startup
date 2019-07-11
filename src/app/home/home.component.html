@@ -1,0 +1,32 @@
+
+<!-- <div class="container-fluid">
+    <p>home works!</p>
+    <h1>{{testVar}}</h1>
+</div> -->
+
+
+<app-table-widget 
+[Cols]="cols"
+[(GridData)]="carsData"
+[isEditable]="true">
+</app-table-widget>
+
+<button (click)="onEditComplete()">detect me!</button>
+<!-- <p-table [columns]="cols" [value]="carsData">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table> -->
+
+<p-calendar  [(ngModel)]="dateVal"></p-calendar>

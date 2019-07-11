@@ -1,1 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
+.drop-down-full-width .ui-dropdown {
+    width: 100% !important;
+}

@@ -1,0 +1,56 @@
+
+<p-table [value]="gridData" [columns]="_Cols">
+
+    <ng-template pTemplate="header">
+        <tr class="grid-header">
+          <ng-container *ngFor="let col of _Cols">
+            <th >
+              <span *ngIf="col.type !== 'icon'">{{col.header}}</span>
+              <img *ngIf="col.type === 'icon'" src="assets/image/{{col.header}}" />
+              <p-sortIcon [field]="col.field" *ngIf="col.type !== 'icon'"></p-sortIcon>
+            </th>
+          </ng-container>
+        </tr>  
+      </ng-template>
+
+      <ng-template  let-rowData="rowData" let-column="column" let-colText="colText">
+        <td [title]="colText">
+          <span *ngIf="column.type !== 'icon'">{{colText}}</span>
+          <img *ngIf="column.type === 'icon'" src="assets/image/icons/{{colText}}" />
+        </td>
+      </ng-template>
+
+    <ng-template pTemplate="body" let-rowData>
+        <tr>
+            <ng-container *ngFor="let col of _Cols">    
+                <ng-template #defaultCellRenderer>
+                    <td>
+                        {{getValueAsString(rowData, col)}}
+                    </td>    
+                </ng-template>
+                <ng-container *ngIf="isEditable ; else defaultCellRenderer">
+                    <td pEditableColumn>      
+                        <p-cellEditor>
+                            <ng-template pTemplate="output">
+                                <!-- {{rowData[col.field]}} -->
+                                {{getValueAsString(rowData, col)}}
+                            </ng-template>
+                            <ng-template pTemplate="input" *ngIf="col.type === 'text'">
+                                <input pInputText [(ngModel)]="rowData[col.field]" type="text" maxlength="50"
+                                    class="form-control" />
+                            </ng-template>
+                            <ng-template pTemplate="input" *ngIf="col.type === 'dropdown'">
+                                <p-dropdown [options]="getDropDownValues(col)" class="drop-down-full-width"
+                                     [(ngModel)]="rowData[col.field]"></p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="input" *ngIf="col.type === 'date'">
+                                <p-calendar [(ngModel)]="rowData[col.field]"  ></p-calendar>
+                            </ng-template>    
+                        </p-cellEditor>    
+                    </td>
+                </ng-container>
+            </ng-container>
+        </tr>
+    </ng-template>
+</p-table>
+
