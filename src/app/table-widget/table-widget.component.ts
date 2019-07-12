@@ -38,17 +38,21 @@ export class TableWidgetComponent<T> implements OnInit {
   @Input() public set GridData(value: T[]) { 
     if(value) {
       this.gridData = value;
-    }
-   
+    }   
   }
+  @Input() public Description = 'Records';
+  @Input() public isLoading: boolean;
   ngOnInit() {
   }
   getDropDownValues(dropVal) {
     return this.drpService.dropValuesAssigner(dropVal);
   }
-  onEditComplete() {
-    console.log("++++++++",this.gridData)
+  onEditComplete(data) {
+    console.log("++++++++",data);
    // this.gridDataChange.emit(this.gridData);
+  }
+  getColSpanEmptyMessage() {
+    return this._Cols.filter(c => c.visible).length;
   }
   public getValueAsString(rowItem, col): string {
     const val = rowItem[col.field];
@@ -71,4 +75,9 @@ export class TableWidgetComponent<T> implements OnInit {
     console.log("new Date(val)",new Date(val))
     return new Date(val);
   }
+
+  onselectDatePicker(date: Date, index, filed) {
+    this.gridData[index][filed] =  DateFns.format(date, 'DD-MMM-YYYY');
+    this.gridDataChange.emit(this.gridData);
+    } 
 }

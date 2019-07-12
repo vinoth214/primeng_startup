@@ -3,3 +3,49 @@
 .drop-down-full-width .ui-dropdown {
     width: 100% !important;
 }
+
+.calender-full-width .ui-calendar {
+    width: 100% !important;
+}
+.editable-column-full-width .ui-inputtext {
+    width: 100% !important;
+}
+body .ui-table .ui-table-tbody > tr > td {
+    padding: 3px 8px 3px 8px;
+    font-size: 12px;
+  }
+  body .ui-table .ui-table-tbody > tr {
+    height: 27px;
+  }
+  body .ui-table .ui-table-tbody > tr:first-child {
+    height: 26px;
+  }
+  body .ui-table .ui-table-thead > tr > th {
+    padding: 3px 8px 3px 8px;
+    font-size: 13px;
+    word-wrap: break-word;
+  }
+  body .ui-table .ui-table-thead > tr > th.ui-sortable-column {
+    padding-right: 22px;
+  }
+  .highlight {
+    background-color:yellow;
+  }
+
+  .ui-table .ui-table-sort-icon {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    margin-top: -9px;
+  }
+  .ui-table .ui-table-sort-icon i {
+    display: inline-block;
+  }
+
+  /* .ui-table-tbody> tr> td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+  } */
