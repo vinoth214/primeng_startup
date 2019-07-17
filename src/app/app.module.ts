@@ -4,6 +4,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import {DropdownModule} from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import {DialogModule} from 'primeng/dialog';
+import {CheckboxModule} from 'primeng/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +29,7 @@ import { CustomersModule } from './customers/customers.module'
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    TableModule,DropdownModule,CalendarModule,
+    TableModule,DropdownModule,CalendarModule,ContextMenuModule,DialogModule,CheckboxModule,
     FormsModule,CustomersModule
   ],
   providers: [],
