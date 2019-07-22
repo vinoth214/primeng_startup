@@ -16,6 +16,7 @@ export class ColumnDef {
   public filterMatchMode?= 'contains';
   public codeList?: string = null;
   public visible?= true;
+  public isEditable ?= false;
   public dropDownValName?: string = null;
   public defaultsForFilter?: (items: SelectItem[]) => SelectItem[] = e => e;
 }

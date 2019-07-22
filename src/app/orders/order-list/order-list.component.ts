@@ -14,7 +14,7 @@ export class ColumnDef {
   public type ?= 'text';
   public colWidthPercentage: string;
   public filterMatchMode ?= 'contains';
-  // public codeList?: string = null;
+  public codeList?: string = null;
   public visible ?= true;
   public isEditable ?= false;
   public dropDownValName?:string = null;
@@ -41,13 +41,18 @@ export class OrderListComponent<T> implements OnInit {
     if (value) {
       this.originalGridData = value;
       this.gridData = value;
+
+      this.filterSelectItems.clear();
+
+      this.LoadVirtualRecords(value);
     }
   }
   @Input() public Description = 'Records';
   @Input() public dataKey = 'id';
   @Input() public isLoading: boolean;
   @Input() public scrollHeight = '300px';
-  @Input() public RightClickHandler: (rowData: T, menuItems: MenuItem[]) => void;
+  @Input() public RightClickHandler: (rowData: T, menuItems: MenuItem[]) => void;  
+  @Input() public HasFilters: boolean; // Flag to say if table has a header row with filter
   @Input() public HasCheckBoxMultiSelect: boolean; 
   @Input() public selectedRowsData: T[] = [];
 
@@ -64,6 +69,8 @@ export class OrderListComponent<T> implements OnInit {
   protected prevTarget = null; // used to clear the formatting
   public ColumnSelectAllFlag: boolean;
   public showColumnHeaderFlag = false;
+  protected filterSelectItems: Map<string, SelectItem[]> = new Map();
+
 
 
 
@@ -79,7 +86,7 @@ export class OrderListComponent<T> implements OnInit {
     return this.drpService.dropValuesAssigner(dropVal);
   }
   getColSpanEmptyMessage() {
-    return this._Cols.filter(c => c.visible).length;
+    return this._Cols.filter(c => c.visible).length + (this.HasCheckBoxMultiSelect ? 1 : 0);
   }
   public getValueAsString(rowItem, col): string {
     const val = rowItem[col.field];
@@ -248,6 +255,132 @@ export class OrderListComponent<T> implements OnInit {
     //     .except(this.selectedRowsData, e => this.getKey(e)).count();
     //   this.tableHeaderCheckboxSelectedAll = (count === 0);
     // }
+  }
+
+  // filter code starts
+
+  FieldFilterOptions(col: ColumnDef): SelectItem[] {
+    const fieldName = col.field;
+    if (!this.filterSelectItems.has(fieldName)) {
+      if (col.type !== 'bool') {
+        const items = Enumerable.from(this.originalGridData).select(e =>
+          <SelectItem>{ label: e[fieldName], value: e[fieldName] })
+          .distinct(e => e.label)
+          .orderBy(e => e.label.toLocaleLowerCase()).toArray();
+        this.filterSelectItems.set(fieldName, items);
+      } else {
+        const items = Enumerable.from(this.originalGridData).select(e =>
+          <SelectItem>{ label: e[fieldName] ? 'Yes' : 'No', value: e[fieldName] })
+          .distinct(e => e.label)
+          .orderByDescending(e => e.label).toArray();
+        this.filterSelectItems.set(fieldName, items);
+      }
+
+      this.populateDefaultForFilter(col);
+
+    }
+    return this.filterSelectItems.get(fieldName);
+  }
+
+  // getSelectedValue(col: ColumnDef) {
+  //   if (this.GridRef.hasFilter) {
+  //     if (this.GridRef.filters[col.field]) {
+  //       return this.GridRef.filters[col.field];
+  //     }
+  //   }
+
+  //   return '--All--';
+
+  // }
+
+  populateDefaultForFilter(col: ColumnDef) {
+    
+    const fieldDefaults = col.field + '_defaults';
+    if (col.filterMatchMode === 'equals') {
+      if (this.GridRef.hasFilter && this.GridRef.filters[col.field]) {
+        this.filterSelectItems[fieldDefaults] = this.GridRef.filters[col.field].value[0];
+       }
+      // else {
+      //   if (col.defaultsForFilter) {
+      //     const items = this.filterSelectItems.get(col.field);
+      //     const defaults = col.defaultsForFilter(items);
+      //     this.filterSelectItems[fieldDefaults] = defaults[0].value;
+      //   }
+       else {
+          this.filterSelectItems[fieldDefaults] = '--All--';
+        }
+     // }
+    } else {
+      if (this.GridRef.hasFilter && this.GridRef.filters[col.field]) {
+        this.filterSelectItems[fieldDefaults] = this.GridRef.filters[col.field].value;
+      } else {
+      const items = this.filterSelectItems.get(col.field);
+      const defaults = col.defaultsForFilter ? col.defaultsForFilter(items) : items;
+      this.filterSelectItems[fieldDefaults] = defaults.map(e => e.value);
+      }
+    }
+
+  }
+
+  onSelectChange($event, grid, col) {
+    if ($event.target.value === '--All--') {
+      grid.filter('', col.field, 'equals');
+    } else {
+
+      let filteredValue = $event.target.value;
+      if (col.type === 'bool') {
+        if ($event.target.value === 'true') {
+          filteredValue = true;
+        } else {
+          filteredValue = false;
+        }
+      }
+
+      grid.filter([filteredValue], col.field, 'in');
+    }
+  }
+
+  private LoadVirtualRecords(value: T[]) {
+    let hasToFilter = false;
+    const filters = {};
+    if (this.HasFilters) {
+      if (this.GridRef.hasFilter()) {
+        hasToFilter = true;
+        if (this.GridRef) {
+          this.GridRef._filter();
+        }
+      } else {
+        this._Cols.forEach(col => {
+          if (col.filterMatchMode === 'in' && col.defaultsForFilter) {
+            // if (col.codeList) {
+            // //  this.CodeListFilterOptions(col);
+            // } else {
+            //   this.FieldFilterOptions(col);
+            // }
+            this.FieldFilterOptions(col);
+            filters[col.field] = { value: this.filterSelectItems[col.field + '_defaults'], matchMode: 'in' };
+            this.GridRef.filter(this.filterSelectItems[col.field + '_defaults'], col.field, 'in');
+            hasToFilter = true;
+
+          }
+        });
+      }
+    }
+    if (hasToFilter) {
+      // const lazyLoadEvent = <LazyLoadEvent>{
+      //   first: 0,
+      //   rows: this.VirtualRowsCount * 2,
+      //   filters: filters
+      // };
+      // this.LazyLoad(lazyLoadEvent);
+    } else {
+      if (this.GridRef) {
+        this.GridRef._filter();
+      }
+      // this.virtualRowsData = value.slice(0, this.VirtualRowsCount * 2);
+      // this.DisplayedResultsCount = value.length;
+    }
+    this.cdr.detectChanges();
   }
 
 }

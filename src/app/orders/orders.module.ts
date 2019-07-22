@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { CheckboxModule } from 'primeng/checkbox';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
   declarations: [OrderListComponent],
@@ -17,7 +18,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     CommonModule,
     OrdersRoutingModule,
     FormsModule,
-    TableModule,DropdownModule,CalendarModule,ContextMenuModule,DialogModule,CheckboxModule,
+    TableModule,DropdownModule,CalendarModule,ContextMenuModule,DialogModule,CheckboxModule,MultiSelectModule,
   ],
   exports:[OrderListComponent]
 })

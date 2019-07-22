@@ -10,6 +10,16 @@
 .editable-column-full-width .ui-inputtext {
     width: 100% !important;
 }
+
+.multiselect-dropdown-full-width .ui-multiselect {
+  width: 100% !important;
+}
+.filter .ui-multiselect-label {
+  height: 21px;
+  padding: 2px 2px 2px 2px !important;
+  font-weight: normal;
+  font-size: .8em;
+}
 body .ui-table .ui-table-tbody > tr > td {
     padding: 3px 8px 3px 8px;
     font-size: 12px;

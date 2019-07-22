@@ -10,6 +10,7 @@
 [HasCheckBoxMultiSelect]="true"
 [(selectedRowsData)]="selectedRowsData"
 (RowsSelectionChange)="OnRowsSelectionChange($event)"
+[HasFilters]='true'
 dataKey="brand"></app-order-list>
 
 <button (click)="update()">detect me!</button>

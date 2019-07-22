@@ -5,6 +5,7 @@
         [scrollable]="true" [scrollHeight]="scrollHeight"  selectionMode="multiple" rowSelectMode="checkbox" [(selection)]="selectedRowsData" 
         (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)"
         [rowTrackBy]="rowTrackByFunction"  >
+
             <ng-template pTemplate="colgroup" let-columns>
                 <colgroup>
                     <col *ngIf="HasCheckBoxMultiSelect" style="width: 30px; padding: 2px;">
@@ -14,7 +15,32 @@
                     </ng-container>
                 </colgroup>
             </ng-template>
-    
+            
+            <ng-template #defaultFilter let-col="column">
+                    <th>
+                      <!-- <div style="position:absolute; z-index:100; margin-top: -12px" class="filter"> -->
+                      <div class="filter">
+              
+                        <p-multiSelect *ngIf="col.codeList == null && col.filterMatchMode === 'in'" appendTo="body"
+                          class="multiselect-dropdown-full-width" [options]="FieldFilterOptions(col)" defaultLabel="--All--"
+                          [filter]="false" [dataKey]="value" [maxSelectedLabels]="0" selectedItemsLabel="{0} items"
+                          [(ngModel)]="filterSelectItems[col.field + '_defaults']" [name]="col.field"
+                          (onChange)="grid.filter($event.value, col.field, 'in')">
+                        </p-multiSelect>
+              
+              
+                      </div>
+                      <select style="width: 100%;" *ngIf="col.codeList == null && col.filterMatchMode === 'equals'"
+                        (change)="onSelectChange($event, grid, col)" [(ngModel)]="filterSelectItems[col.field + '_defaults']">
+                        <option value="--All--">--All--</option>
+                        <option *ngFor="let item of FieldFilterOptions(col)" value="{{item.value}}">{{item.label}}</option>
+                      </select>
+
+                      <input  style="width: 100%;" *ngIf="col.filterMatchMode === 'contains'" pInputText type="text"
+                        (input)="grid.filter($event.target.value, col.field, col.filterMatchMode)">
+                    </th>
+                  </ng-template>
+
             <ng-template pTemplate="header">
                 <tr class="grid-header">
                         <th *ngIf="HasCheckBoxMultiSelect" pResizableColumn>
@@ -30,6 +56,19 @@
                         </th>
                     </ng-container>
                 </tr>
+
+                <tr *ngIf="HasFilters">
+                        <th *ngIf="HasCheckBoxMultiSelect">
+                        </th>
+                        <th *ngIf="HasPinUnpin">
+                        </th>
+                        <ng-container *ngFor="let col of _Cols">
+                          <ng-container *ngIf="col.visible">
+                            <ng-container *ngTemplateOutlet="filterTemplate ? filterTemplate : defaultFilter; context: { column: col }">
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                      </tr>
             </ng-template>
     
             <ng-template let-rowData="rowData" let-column="column" let-colText="colText">
