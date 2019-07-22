@@ -2,11 +2,11 @@
     <p-contextMenu #cm [model]="interalContextMenuItems"  [baseZIndex]="1000"></p-contextMenu>
     <p-contextMenu #hcm [model]="interalContextHeaderMenuItems"  [baseZIndex]="1000"></p-contextMenu>
     <p-table #grid [value]="gridData" [columns]="_Cols" [resizableColumns]="true" (onColResize)="onColResize($event)"  columnResizeMode="expand"
-    [scrollable]="true" [scrollHeight]="scrollHeight"     >
+    [scrollable]="true" [scrollHeight]="scrollHeight"  selectionMode="multiple" [(selection)]="selectedRowsData"   >
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
-                <!-- <col *ngIf="HasCheckBoxMultiSelect" style="width: 30px; padding: 2px;">
-                  <col *ngIf="HasPinUnpin" style="width: 30px"> -->
+                <col *ngIf="HasCheckBoxMultiSelect" style="width: 30px; padding: 2px;">
+                <!--  <col *ngIf="HasPinUnpin" style="width: 30px"> -->
                 <ng-container *ngFor="let col of columns">
                     <col *ngIf="col.visible" [style.width]="col.colWidthPercentage">
                 </ng-container>
@@ -15,6 +15,11 @@
 
         <ng-template pTemplate="header">
             <tr class="grid-header">
+                    <th *ngIf="HasCheckBoxMultiSelect" pResizableColumn>
+                            <p-checkbox [(ngModel)]="tableHeaderCheckboxSelectedAll" binary="true"
+                              (onChange)="onHeaderCheckboxToggle($event)"
+                              (contextmenu)="onHeaderRightClick($event, null, hcm)"></p-checkbox>
+                          </th>
                 <ng-container *ngFor="let col of _Cols">
                     <th *ngIf="col.visible" [attr.data-field]="col.field" [pSortableColumn]="col.field" (contextmenu)="onHeaderRightClick($event, col, hcm)" pResizableColumn>
                         <span *ngIf="col.type !== 'icon'">{{col.header}}</span>
@@ -45,7 +50,10 @@
         </ng-template>
 
         <ng-template pTemplate="body" let-rowData let-ri="rowIndex">
-            <tr>
+            <tr >
+                    <td *ngIf="HasCheckBoxMultiSelect" style="padding: 2px 8px 2px 8px;">
+                            <p-tableCheckbox [value]="gridRowData"></p-tableCheckbox>
+                          </td>
                 <ng-container *ngFor="let col of _Cols">
                     <ng-container *ngIf="col.visible">
                         <ng-template #defaultCellRenderer>

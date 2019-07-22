@@ -9,6 +9,7 @@ import * as data from '../../../assets/Json/cars.json';
 })
 export class CustomerListComponent implements OnInit {
   public carsData;
+  public selectedRowsData;
   constructor() { }
   public cols:ColumnDef[] = [
     { header: 'Brand', field: 'brand', filterMatchMode: 'contains', colWidthPercentage: '20%', type: 'dropdown' },
@@ -22,6 +23,12 @@ export class CustomerListComponent implements OnInit {
   }
   update() {
     console.log("this.carsData++1222",this.carsData);
+    console.log("selectedRowsData++++",this.selectedRowsData);
+    //this.OnRowsSelectionChange();
   }
 
+  public OnRowsSelectionChange(event) {
+    console.log("inside function",event);
+    console.log("selectedRowsData++++",this.selectedRowsData);
+  }
 }

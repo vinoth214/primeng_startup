@@ -7,6 +7,9 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [OrderListComponent],
@@ -14,7 +17,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     OrdersRoutingModule,
     FormsModule,
-    TableModule,DropdownModule,CalendarModule,
+    TableModule,DropdownModule,CalendarModule,ContextMenuModule,DialogModule,CheckboxModule,
   ],
   exports:[OrderListComponent]
 })

@@ -7,6 +7,9 @@
 
 <app-order-list [Cols]="cols"
 [(GridData)]="carsData"
-[isEditable]="true"></app-order-list>
+[HasCheckBoxMultiSelect]="true"
+[(selectedRowsData)]="selectedRowsData"
+(RowsSelectionChange)="OnRowsSelectionChange($event)"
+dataKey="brand"></app-order-list>
 
 <button (click)="update()">detect me!</button>

@@ -46,6 +46,10 @@ export class TableWidgetComponent<T> implements OnInit {
   @Input() public isLoading: boolean;
   @Input() public scrollHeight = '300px';
   @Input() public RightClickHandler: (rowData: T, menuItems: MenuItem[]) => void;
+  @Input() public HasCheckBoxMultiSelect: boolean; 
+  @Input() public selectedRowsData: T[] = [];
+
+  @Output() public selectedRowsDataChange: EventEmitter<T[]> = new EventEmitter();
   public interalContextHeaderMenuItems: MenuItem[] = [];
   protected _rightClickSelectedColData: ColumnDef;
   public selectedColumns: ColumnDef[] = [];
@@ -296,4 +300,6 @@ export class TableWidgetComponent<T> implements OnInit {
   onColResize($event) {
     this.UpdateColWidthPref();
   }
+
+  
 }

@@ -43,6 +43,27 @@ body .ui-table .ui-table-tbody > tr > td {
     display: inline-block;
   }
 
+  .pi-sort:before {
+    content: '' !important;
+  }
+  .ui-table .ui-table-sort-icon {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    margin-top: -9px;
+  
+    /* // float: right !important;
+    // line-height: 30px; // height taken from OPs plunker */
+  }
+  .ui-table .ui-table-sort-icon i {
+    display: inline-block;
+  }
+
+  tr.selectedRow {
+    background-color: #448de870 !important;
+  }
+
   /* .ui-table-tbody> tr> td {
     white-space: nowrap;
     overflow: hidden;

@@ -21,10 +21,10 @@ export class HomeComponent implements OnInit {
   }
 
   public cols:ColumnDef[] = [
-    { header: 'Brand', field: 'brand', filterMatchMode: 'contains', colWidthPercentage: '30%', type: 'dropdown' },
+    { header: 'Brand', field: 'brand', filterMatchMode: 'contains', colWidthPercentage: '30%', type: 'dropdown', visible:false },
     { header: 'Year', field: 'year', filterMatchMode: 'contains', colWidthPercentage: '20%', type: 'date' },
     { header: 'Color', field: 'color', filterMatchMode: 'contains', colWidthPercentage: '30%', type: 'text' },
-    { header: 'Vin', field: 'vin', filterMatchMode: 'contains', colWidthPercentage: '20%', type: 'text',visible:false },
+    { header: 'Vin', field: 'vin', filterMatchMode: 'contains', colWidthPercentage: '20%', type: 'text' },
   ]
 
   onEditComplete() {
