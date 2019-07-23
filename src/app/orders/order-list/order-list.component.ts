@@ -51,6 +51,8 @@ export class OrderListComponent<T> implements OnInit {
   @Input() public dataKey = 'id';
   @Input() public isLoading: boolean;
   @Input() public scrollHeight = '300px';
+  @Input() public rowsPerPage = 5;
+  @Input() public isPaginator = true;
   @Input() public RightClickHandler: (rowData: T, menuItems: MenuItem[]) => void;  
   @Input() public HasFilters: boolean; // Flag to say if table has a header row with filter
   @Input() public HasCheckBoxMultiSelect: boolean; 

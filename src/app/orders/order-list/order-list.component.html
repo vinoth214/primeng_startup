@@ -4,7 +4,7 @@
         <p-table #grid [value]="gridData" [dataKey]="dataKey" [columns]="_Cols" [resizableColumns]="true" (onColResize)="onColResize($event)"  columnResizeMode="expand"
         [scrollable]="true" [scrollHeight]="scrollHeight"  selectionMode="multiple" rowSelectMode="checkbox" [(selection)]="selectedRowsData" 
         (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" (onHeaderCheckboxToggle)="onHeaderCheckboxToggle($event)"
-        [rowTrackBy]="rowTrackByFunction"  >
+        [rowTrackBy]="rowTrackByFunction" [paginator]="isPaginator" [rows]="rowsPerPage"  >
 
             <ng-template pTemplate="colgroup" let-columns>
                 <colgroup>

@@ -11,6 +11,7 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { CheckboxModule } from 'primeng/checkbox';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {PaginatorModule} from 'primeng/paginator';
 
 @NgModule({
   declarations: [OrderListComponent],
@@ -18,7 +19,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
     CommonModule,
     OrdersRoutingModule,
     FormsModule,
-    TableModule,DropdownModule,CalendarModule,ContextMenuModule,DialogModule,CheckboxModule,MultiSelectModule,
+    TableModule,DropdownModule,CalendarModule,ContextMenuModule,DialogModule,CheckboxModule,MultiSelectModule,PaginatorModule,
   ],
   exports:[OrderListComponent]
 })

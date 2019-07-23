@@ -12,7 +12,7 @@ export class CustomerListComponent implements OnInit {
   public selectedRowsData;
   constructor() { }
   public cols:ColumnDef[] = [
-    { header: 'Brand', field: 'brand', filterMatchMode: 'equals', colWidthPercentage: '20%', type: 'dropdown',isEditable:true },
+    { header: 'Brand', field: 'brand', filterMatchMode: 'equals', colWidthPercentage: '20%', type: 'dropdown', isEditable:true },
     { header: 'Year', field: 'year', filterMatchMode: '', colWidthPercentage: '20%', type: 'date' },
     { header: 'Color', field: 'color', filterMatchMode: 'in', colWidthPercentage: '20%', type: 'text' },
     { header: 'Vin', field: 'vin', filterMatchMode: 'contains', colWidthPercentage: '20%', type: 'text' },
@@ -30,5 +30,8 @@ export class CustomerListComponent implements OnInit {
   public OnRowsSelectionChange(event) {
     console.log("inside function",event);
     console.log("selectedRowsData++++",this.selectedRowsData);
+  }
+  OnRowClicked(event) {
+    console.log("inside OnRowClicked",event);
   }
 }

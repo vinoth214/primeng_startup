@@ -5,12 +5,15 @@
 [isEditable]="true">
 </app-table-widget> -->
 
-<app-order-list [Cols]="cols"
+<app-order-list 
+Description="Car Results"
+[Cols]="cols"
 [(GridData)]="carsData"
 [HasCheckBoxMultiSelect]="true"
 [(selectedRowsData)]="selectedRowsData"
 (RowsSelectionChange)="OnRowsSelectionChange($event)"
 [HasFilters]='true'
+(RowLeftClick)="OnRowClicked($event)"
 dataKey="brand"></app-order-list>
 
 <button (click)="update()">detect me!</button>
